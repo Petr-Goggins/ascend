@@ -1,71 +1,214 @@
-# Ascend
+# Ascend — фитнес-приложение с ИИ-наставником
 
-React, TypeScript, Vite, Supabase, and FastAPI fitness tracking application.
+**Дипломная работа**
 
-## Frontend setup
+Автор: Садовников Пётр  
+Репозиторий: https://github.com/Petr-Goggins/ascend
 
-Requirements: Node.js 20.19+ (or 22.12+) and npm.
+---
 
-```powershell
+## Актуальность
+
+Современные фитнес-приложения работают по принципу «один план для всех». Они не учитывают индивидуальные особенности пользователя: уровень подготовки, травмы, доступный инвентарь, физиологическое состояние. В результате человек быстро теряет мотивацию и бросает тренировки.
+
+**Ascend** решает эту проблему: приложение автоматически адаптирует программу тренировок, рацион питания и план восстановления под конкретного пользователя с помощью искусственного интеллекта.
+
+---
+
+## Цель работы
+
+Разработать веб-приложение Ascend — персонализированного фитнес-коуча с ИИ-наставником, который подстраивает тренировки, питание и восстановление под индивидуальные данные пользователя.
+
+---
+
+## Задачи
+
+1. Проанализировать существующие фитнес-приложения и выявить их недостатки.
+2. Спроектировать архитектуру (фронтенд, бэкенд, база данных).
+3. Реализовать систему сбора данных пользователя (анкета тренера).
+4. Разработать модуль генерации тренировок на научной основе.
+5. Реализовать поиск продуктов питания.
+6. Внедрить ИИ-наставника для анализа прогресса.
+7. Добавить элементы геймификации (уровни, достижения, дерево навыков).
+8. Реализовать визуализацию прогресса (графики, тепловая карта мышц).
+9. Протестировать приложение и оценить результаты.
+
+---
+
+## Стек технологий
+
+| Слой | Технологии |
+|------|------------|
+| **Фронтенд** | React 18, TypeScript, Vite, Tailwind CSS |
+| **Состояние** | Zustand |
+| **Бэкенд** | Python, FastAPI, Uvicorn |
+| **База данных** | Supabase (PostgreSQL) |
+| **ИИ** | OpenRouter / ZvenoAI |
+| **Иконки** | lucide-react |
+
+---
+
+## Структура проекта
+ascend/
+├── syns-app-frontend/ # Фронтенд (React + Vite)
+│ └── syns-app-frontend/
+│ ├── src/
+│ │ ├── components/ # UI-компоненты
+│ │ ├── pages/ # Страницы
+│ │ ├── store/ # Zustand-сторы
+│ │ ├── services/ # API-сервисы
+│ │ └── lib/ # Утилиты
+│ └── package.json
+│
+└── syns-app-backend/ # Бэкенд (FastAPI)
+└── back/backend/
+├── main.py # Точка входа
+├── ai_service.py # Логика работы с ИИ
+├── routers/ # API-эндпоинты
+└── requirements.txt
+
+text
+
+---
+
+## Запуск проекта
+
+### Требования
+- Node.js 18+
+- Python 3.10+
+- Git
+
+### 1. Клонирование репозитория
+
+```bash
+git clone https://github.com/Petr-Goggins/ascend.git
+cd ascend
+2. Запуск фронтенда
+Открой терминал в корне проекта:
+
+bash
 Set-Location syns-app-frontend\syns-app-frontend
 npm install
 Copy-Item .env.example .env
+Заполни .env:
+
+env
+VITE_SUPABASE_URL=https://hbtbdlmdpmjqoeqlxewl.supabase.co
+VITE_SUPABASE_ANON_KEY=sb_publishable_yzl5i9xzKAUFPu6lhorzgg_-tY-IAQK
+VITE_API_URL=http://localhost:8000
+VITE_VKUSVILL_API_URL=https://mcp001.vkusvill.ru/mcp
+Запуск:
+
+bash
 npm run dev
-```
+Фронтенд откроется на http://localhost:5173.
+Запросы к /api автоматически проксируются на бэкенд (http://127.0.0.1:8000).
 
-Configure `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` in `.env`.
-The default Vite proxy forwards `/api` requests to `http://127.0.0.1:8000`.
+3. Запуск бэкенда
+Открой второй терминал:
 
-Run the production build and type check with:
-
-```powershell
-npm run build
-npx tsc --noEmit
-```
-
-## Backend setup
-
-Requirements: Python 3.10+.
-
-```powershell
+bash
 Set-Location syns-app-backend\back\backend
 py -m venv venv
 .\venv\Scripts\Activate.ps1
 pip install -r requirements.txt
 Copy-Item .env.example .env
+Заполни .env:
+
+env
+OPENROUTER_API_KEY=sk-c9vnkzO-uGc-iIkcEeoeZcR9D32ex5NkCjC8uBr8KG8
+OPENROUTER_BASE_URL=https://api.zveno.ai/v1
+ZVENO_BASE_URL=https://api.zveno.ai/v1
+ZVENO_MODEL=inclusionai/ling-3.0-flash-sante:free
+ZVENO_FALLBACK_MODELS=dots-studio/dots-3-note-preview:free,liquid/lfm-2.5-2.6b:free,poolside/laguna-s-2.1:free,poolside/laguna-xs-2.1:free,cohere/north-mini-code:free
+SITE_URL=http://localhost:8000
+SITE_TITLE=Sync App
+Запуск:
+
+bash
 uvicorn main:app --reload --port 8000
-```
+Проверка:
 
-Set `OPENROUTER_API_KEY` in the backend `.env`. Configure `CORS_ORIGINS` as a
-comma-separated allowlist for the deployed frontend origins. Health check:
-`http://localhost:8000/health`; API documentation: `http://localhost:8000/docs`.
+Health check: http://localhost:8000/health
 
-## Product catalog
+Swagger-документация: http://localhost:8000/docs
 
-Product search currently uses the user's Supabase catalog. If no local product
-matches, add the item manually with its nutrition values. External supermarket
-search attempts the configured VkusVill MCP endpoint first and falls back to
-the local catalog and manual entry. Configure
-`VITE_VKUSVILL_API_URL=https://mcp001.vkusvill.ru/mcp` in the frontend
-environment; the backend accepts only the official VkusVill MCP hosts. The
-MCP server currently replies with an OAuth authorization challenge when called
-without an access token, so the URL alone may not authorize catalogue search.
-Pyaterochka is not configured.
 
-## Supabase
+Функциональные возможности
+Модуль	Описание
+Анкета тренера	Сбор данных: цель, опыт, инвентарь, травмы, фокусные мышцы
+Прогноз цели	Расчёт времени достижения целевого веса
+Тренировки	Генерация программы на основе 14 научных принципов
+Питание	Дневник приёмов пищи, подсчёт КБЖУ, ручной ввод продуктов
+Статистика	Графики прогресса, отчёты от ИИ
+Профиль	Тепловая карта мышц, календари, норма воды
+Геймификация	Уровни, достижения, дерево навыков
+Динамический остров	Контекстные подсказки вверху экрана
+Научная основа генерации тренировок
+Модуль генерации тренировок опирается на 14 принципов (ACSM, NSCA):
 
-Apply the SQL migrations in `supabase/migrations` to the Supabase project before
-using the application. The browser uses the public anon key; row-level security
-must be enabled and policies applied for every user-owned table.
+Линейная микроциклизация 3:1
 
-For a Supabase project that already has the earlier schema but is missing the
-profile name, sleep date, nutrition diary, weight history, or chat table, apply
-`supabase/migrations/20261005150000_repair_live_app_schema.sql` in the Supabase
-SQL Editor (or apply pending migrations with the linked Supabase CLI). Reload
-the app after the migration completes.
+Частотный сплит по уровню подготовки
 
-The coach assessment and body-measurement report require
-`supabase/migrations/20261008090000_add_assessment_and_body_measurements.sql`.
-Apply it before saving questionnaire data or body measurements. Calorie and
-macro targets use the adult Mifflin–St Jeor estimate and are informational,
-not medical advice.
+Чередование плоскостей и векторов нагрузки
+
+Метод двойной прогрессии
+
+Объёмная доза подходов
+
+Приоритет базовых многосуставных движений
+
+Авторегуляция через RIR
+
+Баланс «тяга–жим» 1:1 и 1:1.5
+
+Адаптация под инвентарь
+
+Учёт фаз менструального цикла
+
+Разминка и заминка
+
+Протокол восстановления
+
+От простого к сложному
+
+Практичность и тайминг
+
+Текущее состояние и ограничения
+Что работает:
+
+Аутентификация через Supabase
+
+Анкета тренера, прогноз цели
+
+Генерация тренировок и питания
+
+ИИ-наставник (OpenRouter / ZvenoAI)
+
+Геймификация, тепловая карта, календари
+
+Что в разработке:
+
+Поиск продуктов через внешние API магазинов
+
+Сканер штрих-кодов
+
+Голосовой ввод
+
+Оценка формы по фото
+
+Ограничения:
+
+Внешний поиск по супермаркетам недоступен до настройки официального доступа к провайдерам API.
+
+Каталог продуктов сейчас работает на локальном поиске (Supabase) и ручном вводе.
+
+Возможные направления развития
+Мобильная версия на React Native.
+
+Интеграция с носимыми устройствами (Apple Health, Google Fit, Huawei Health).
+
+Расширение базы знаний ИИ (RAG-архитектура на научных публикациях).
+
+Система подписки и B2B-направление для фитнес-клубов.
