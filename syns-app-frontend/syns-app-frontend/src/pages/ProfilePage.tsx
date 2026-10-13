@@ -198,29 +198,7 @@ export default function ProfilePage({ onOpenSidebar: _onOpenSidebar }: { onOpenS
         </div>
       </header>
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-        <div className="card-modern">
-          <p className="text-xs text-text-tertiary">Цель</p>
-          <p className="mt-1 font-semibold text-text">{profileGoal}</p>
-        </div>
-        <div className="card-modern">
-          <p className="text-xs text-text-tertiary">Тренировки за 30 дней</p>
-          <p className="mt-1 font-semibold text-text">{workoutDaysCount || '—'}</p>
-        </div>
-        <div className="card-modern">
-          <p className="text-xs text-text-tertiary">Серия тренировок</p>
-          <p className="mt-1 flex items-center gap-2 font-semibold text-text">
-            <Flame size={16} className="text-accent-orange" />
-            {metrics.streak ? `${metrics.streak} дней` : '—'}
-          </p>
-        </div>
-        <div className="card-modern">
-          <p className="text-xs text-text-tertiary">Норма воды</p>
-          <p className="mt-1 font-semibold text-text">
-            {waterNorm ? `${waterToday} / ${waterNorm} мл сегодня` : 'Заполните вес в анкете'}
-          </p>
-        </div>
-      </div>
+
 
       <section className="card-modern">
         <div className="mb-4 flex items-center gap-2">

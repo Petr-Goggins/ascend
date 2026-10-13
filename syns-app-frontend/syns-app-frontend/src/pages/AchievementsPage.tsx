@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Activity, Award, Flame, Lock, Medal, Moon, Trophy, Dumbbell } from 'lucide-react';
+import { Activity, Award, Flame, Lock, Medal, Moon, Trophy, Dumbbell, Target, Zap } from 'lucide-react';
 import toast from 'react-hot-toast';
 import TopBar from '@/components/TopBar';
 import { useAuthStore } from '@/store/authStore';

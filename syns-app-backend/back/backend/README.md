@@ -1,4 +1,4 @@
-ёёё# 🏋️ Sync — твой умный фитнес-компаньон
+# 🏋️ Sync — твой умный фитнес-компаньон
 
 [![React](https://img.shields.io/badge/React-18-blue?logo=react)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript)](https://www.typescriptlang.org/)
@@ -22,7 +22,7 @@
 - 🍽️ **Готовые рационы** — фильтр по времени приготовления и типу питания.
 - 🌙 **Тёмная тема** и адаптивный дизайн для телефонов и планшетов.
 
----
+---Ё
 
 ## 🛠️ Технологии
 

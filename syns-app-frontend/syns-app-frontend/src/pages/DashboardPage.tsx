@@ -61,6 +61,7 @@ export default function DashboardPage({ onOpenSidebar: _onOpenSidebar }: { onOpe
 
         const now = new Date();
         const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+
         const { data: meals, error: mealsError } = await supabase
           .from('nutrition_logs')
           .select('calories, proteins, fats, carbs')
@@ -117,12 +118,13 @@ export default function DashboardPage({ onOpenSidebar: _onOpenSidebar }: { onOpe
         const waterEnd = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
         const { data: waterData, error: waterError } = await supabase
           .from('water_logs')
-          .select('amount')
+          .select('amount_ml')
           .eq('user_id', user.id)
           .gte('created_at', waterStart.toISOString())
           .lt('created_at', waterEnd.toISOString());
         if (waterError) throw waterError;
-        const totalWater = waterData?.reduce((sum, w) => sum + w.amount, 0) || 0;
+        const totalWater = waterData?.reduce((sum, w) => sum + (w.amount_ml || 0), 0) || 0;
+
         setQuestionnaireComplete(isQuestionnaireComplete(profile ?? null));
 
         setStats({
@@ -150,9 +152,9 @@ export default function DashboardPage({ onOpenSidebar: _onOpenSidebar }: { onOpe
     if (!user || addingWater || !Number.isInteger(amount) || amount <= 0 || amount % 50 !== 0) return;
     setAddingWater(true);
     try {
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from('water_logs')
-        .insert({ user_id: user.id, amount });
+        .insert({ user_id: user.id, amount_ml: amount });
       if (error) throw error;
       setStats((current) => ({ ...current, water: current.water + amount / 1000 }));
       toast.success(`Добавлено ${amount} мл воды`);
@@ -198,12 +200,14 @@ export default function DashboardPage({ onOpenSidebar: _onOpenSidebar }: { onOpe
         </div>
       </section>
 
-      {!questionnaireComplete && <div className="card-modern mt-4 border-accent-blue/30">
-        <p className="text-sm text-text">Заполните анкету, чтобы получить персональный план тренировок.</p>
-        <button type="button" onClick={() => navigate('/coach')} className="mt-2 text-sm font-semibold text-accent-blue">Заполнить анкету →</button>
-      </div>}
+      {!questionnaireComplete && (
+        <div className="card-modern mt-6 border-accent-blue/30">
+          <p className="text-sm text-text">Заполните анкету, чтобы получить персональный план тренировок.</p>
+          <button type="button" onClick={() => navigate('/coach')} className="mt-2 text-sm font-semibold text-accent-blue">Заполнить анкету →</button>
+        </div>
+      )}
 
-      <div className="card-modern mb-6 bg-gradient-to-r from-accent-blue/5 to-transparent border-accent-blue/20 text-center py-4">
+      <div className="card-modern mt-6 mb-6 bg-gradient-to-r from-accent-blue/5 to-transparent border-accent-blue/20 text-center py-4">
         <p className="text-text italic">"{dailyQuote.text}"</p>
         <p className="text-text-secondary text-sm">— {dailyQuote.author}</p>
       </div>
