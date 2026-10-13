@@ -177,9 +177,7 @@ export default function DashboardPage({ onOpenSidebar: _onOpenSidebar }: { onOpe
   const widgets = [
     { label: 'Калории', value: `${stats.calories} ккал`, icon: Utensils, color: 'text-accent-orange', bg: 'bg-accent-orange/10', path: '/nutrition' },
     { label: 'Сон', value: `${stats.sleep} ч`, icon: Moon, color: 'text-accent-purple', bg: 'bg-accent-purple/10', path: '/sleep' },
-    { label: 'Тренировки', value: `${stats.workouts} сегодня`, icon: Dumbbell, color: 'text-accent-green', bg: 'bg-accent-green/10', path: '/workouts' },
-    { label: 'Прогресс', value: `${stats.progress}%`, icon: TrendingUp, color: 'text-accent-blue', bg: 'bg-accent-blue/10', path: '/reports' },
-    { label: 'Серия', value: `${stats.streak} дней`, icon: Zap, color: 'text-accent-gold', bg: 'bg-accent-gold/10', path: '/achievements' },
+    { label: 'Подходов', value: `${stats.workouts} сегодня`, icon: Dumbbell, color: 'text-accent-green', bg: 'bg-accent-green/10', path: '/workouts' },
   ];
 
   return (
@@ -273,15 +271,6 @@ export default function DashboardPage({ onOpenSidebar: _onOpenSidebar }: { onOpe
         </aside>
       </div>
 
-      <div className="card-modern mt-6">
-        <div className="flex justify-between items-center mb-2">
-          <span className="text-text-secondary text-sm">Прогресс к цели</span>
-          <span className="text-text font-bold">{stats.progress}%</span>
-        </div>
-        <div className="w-full bg-bg-tertiary rounded-full h-2.5">
-          <div className="bg-accent-blue h-2.5 rounded-full transition-all duration-700" style={{ width: `${stats.progress}%` }} />
-        </div>
-      </div>
 
       <div className="mt-6 grid gap-4 md:grid-cols-2">
         <div className="card-modern">
@@ -289,7 +278,6 @@ export default function DashboardPage({ onOpenSidebar: _onOpenSidebar }: { onOpe
             <span className="text-sm text-text-secondary">Опыт за тренировки</span>
             <span className="text-sm font-semibold text-accent-gold">{xp.toLocaleString('ru-RU')} опыта</span>
           </div>
-          <p className="mt-2 text-xs text-text-tertiary">Уровень пока не рассчитывается</p>
         </div>
         <button type="button" disabled={!questionnaireComplete} onClick={() => { localStorage.setItem('ascend-workout-start', String(Date.now())); navigate('/workouts'); }} className="btn-primary flex items-center justify-center gap-2 px-5 py-4 text-sm disabled:cursor-not-allowed disabled:opacity-50"><Dumbbell size={18} /> Начать тренировку</button>
       </div>

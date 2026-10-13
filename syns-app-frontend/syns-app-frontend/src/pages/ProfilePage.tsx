@@ -177,8 +177,8 @@ export default function ProfilePage({ onOpenSidebar: _onOpenSidebar }: { onOpenS
   const metricCards: { icon: LucideIcon; label: string; value: string }[] = [
     { icon: Dumbbell, label: 'Силовой максимум в приседе (оценка 1ПМ)', value: metrics.squat1Rm },
     { icon: Dumbbell, label: 'Силовой максимум в становой тяге (оценка 1ПМ)', value: metrics.deadlift1Rm },
+
     { icon: Moon, label: 'Восстановление', value: metrics.recovery },
-    { icon: Flame, label: 'Сожжено (оценка)', value: metrics.caloriesBurned },
   ];
 
   if (loading) return <div className="p-6 text-text-secondary">Загрузка профиля...</div>;
@@ -201,7 +201,7 @@ export default function ProfilePage({ onOpenSidebar: _onOpenSidebar }: { onOpenS
 
 
       <section className="card-modern">
-        <div className="mb-4 flex items-center gap-2">
+        <div className="mb-3 flex items-center gap-2">
           <Target size={18} className="text-accent-blue" />
           <h2 className="text-xl font-bold text-text">Метрики</h2>
         </div>
