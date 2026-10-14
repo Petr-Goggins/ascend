@@ -48,29 +48,6 @@
 
 ---
 
-## Структура проекта
-ascend/
-├── syns-app-frontend/ # Фронтенд (React + Vite)
-│ └── syns-app-frontend/
-│ ├── src/
-│ │ ├── components/ # UI-компоненты
-│ │ ├── pages/ # Страницы
-│ │ ├── store/ # Zustand-сторы
-│ │ ├── services/ # API-сервисы
-│ │ └── lib/ # Утилиты
-│ └── package.json
-│
-└── syns-app-backend/ # Бэкенд (FastAPI)
-└── back/backend/
-├── main.py # Точка входа
-├── ai_service.py # Логика работы с ИИ
-├── routers/ # API-эндпоинты
-└── requirements.txt
-
-text
-
----
-
 ## Запуск проекта
 
 ### Требования
@@ -83,39 +60,49 @@ text
 ```bash
 git clone https://github.com/Petr-Goggins/ascend.git
 cd ascend
-2. Запуск фронтенда
+```
+
+### 2. Запуск фронтенда
 Открой терминал в корне проекта:
 
-bash
+```bash
 Set-Location syns-app-frontend\syns-app-frontend
 npm install
 Copy-Item .env.example .env
+```
+
 Заполни .env:
 
-env
+```env
 VITE_SUPABASE_URL=https://hbtbdlmdpmjqoeqlxewl.supabase.co
 VITE_SUPABASE_ANON_KEY=sb_publishable_yzl5i9xzKAUFPu6lhorzgg_-tY-IAQK
 VITE_API_URL=http://localhost:8000
 VITE_VKUSVILL_API_URL=https://mcp001.vkusvill.ru/mcp
+```
+
 Запуск:
 
-bash
+```bash
 npm run dev
+```
+
 Фронтенд откроется на http://localhost:5173.
 Запросы к /api автоматически проксируются на бэкенд (http://127.0.0.1:8000).
 
-3. Запуск бэкенда
+### 3. Запуск бэкенда
 Открой второй терминал:
 
-bash
+```bash
 Set-Location syns-app-backend\back\backend
 py -m venv venv
 .\venv\Scripts\Activate.ps1
 pip install -r requirements.txt
 Copy-Item .env.example .env
+```
+
 Заполни .env:
 
-env
+```env
 OPENROUTER_API_KEY=sk-c9vnkzO-uGc-iIkcEeoeZcR9D32ex5NkCjC8uBr8KG8
 OPENROUTER_BASE_URL=https://api.zveno.ai/v1
 ZVENO_BASE_URL=https://api.zveno.ai/v1
@@ -123,10 +110,14 @@ ZVENO_MODEL=inclusionai/ling-3.0-flash-sante:free
 ZVENO_FALLBACK_MODELS=dots-studio/dots-3-note-preview:free,liquid/lfm-2.5-2.6b:free,poolside/laguna-s-2.1:free,poolside/laguna-xs-2.1:free,cohere/north-mini-code:free
 SITE_URL=http://localhost:8000
 SITE_TITLE=Sync App
+```
+
 Запуск:
 
-bash
+```bash
 uvicorn main:app --reload --port 8000
+```
+
 Проверка:
 
 Health check: http://localhost:8000/health
@@ -135,17 +126,20 @@ Swagger-документация: http://localhost:8000/docs
 
 
 Функциональные возможности
-Модуль	Описание
-Анкета тренера	Сбор данных: цель, опыт, инвентарь, травмы, фокусные мышцы
-Прогноз цели	Расчёт времени достижения целевого веса
-Тренировки	Генерация программы на основе 14 научных принципов
-Питание	Дневник приёмов пищи, подсчёт КБЖУ, ручной ввод продуктов
-Статистика	Графики прогресса, отчёты от ИИ
-Профиль	Тепловая карта мышц, календари, норма воды
-Геймификация	Уровни, достижения, дерево навыков
-Динамический остров	Контекстные подсказки вверху экрана
-Научная основа генерации тренировок
-Модуль генерации тренировок опирается на 14 принципов (ACSM, NSCA):
+|Модуль	|Описание|
+|----|----|
+|Анкета тренера | Сбор данных: цель, опыт, инвентарь, травмы, фокусные мышцы |
+|Прогноз цели |	Расчёт времени достижения целевого веса|
+|Тренировки	| Генерация программы на основе 14 научных принципов|
+|Питание  |	Дневник приёмов пищи, подсчёт КБЖУ, ручной ввод продуктов|
+|Статистика	| Графики прогресса, отчёты от ИИ|
+|Профиль  |	Тепловая карта мышц, календари, норма воды|
+|Геймификация  |	Уровни, достижения, дерево навыков|
+|Динамический остров  |	Контекстные подсказки вверху экрана|
+
+## Научная основа генерации тренировок
+
+### Модуль генерации тренировок опирается на 14 принципов (ACSM, NSCA):
 
 Линейная микроциклизация 3:1
 
@@ -175,8 +169,8 @@ Swagger-документация: http://localhost:8000/docs
 
 Практичность и тайминг
 
-Текущее состояние и ограничения
-Что работает:
+## Текущее состояние и ограничения
+### Что работает:
 
 Аутентификация через Supabase
 
@@ -188,7 +182,7 @@ Swagger-документация: http://localhost:8000/docs
 
 Геймификация, тепловая карта, календари
 
-Что в разработке:
+### Что в разработке:
 
 Поиск продуктов через внешние API магазинов
 
@@ -198,13 +192,14 @@ Swagger-документация: http://localhost:8000/docs
 
 Оценка формы по фото
 
-Ограничения:
+### Ограничения:
 
 Внешний поиск по супермаркетам недоступен до настройки официального доступа к провайдерам API.
 
 Каталог продуктов сейчас работает на локальном поиске (Supabase) и ручном вводе.
 
-Возможные направления развития
+### Возможные направления развития
+
 Мобильная версия на React Native.
 
 Интеграция с носимыми устройствами (Apple Health, Google Fit, Huawei Health).

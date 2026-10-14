@@ -98,7 +98,6 @@ const router = createBrowserRouter([
       { path: 'plan', element: <PageWithSidebar Page={PlanPage} /> },
       { path: 'nutrition', element: <PageWithSidebar Page={NutritionPage} /> },
       { path: 'reports', element: <PageWithSidebar Page={ReportsPage} /> },
-      { path: 'cycle', element: <PageWithSidebar Page={CyclePage} /> },
       { path: 'chat', element: <PageWithSidebar Page={ChatPage} /> },
       { path: 'profile', element: <PageWithSidebar Page={ProfilePage} /> },
       { path: 'workouts', element: <PageWithSidebar Page={WorkoutLogPage} /> },
